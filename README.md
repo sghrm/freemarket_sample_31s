@@ -45,10 +45,10 @@ Things you may want to cover:
 
 
 ### Association
-- has_many :seles
+- has_many :sales
 - has_many :points
 - has_many :reviews
-- has_many :notifications
+- has_many :notifications, as: :notificationable
 - has_many :todos
 - has_many :comments
 - has_many :likes
@@ -84,6 +84,7 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
+|comment_content|text|null: false|
 |user_id|references|null: false, foreign_key: true|
 |item_id|references|null: false, foreign_key: true|
 
@@ -124,20 +125,20 @@ Things you may want to cover:
 - belongs_to :item
 - belongs_to :user
 
-## selesテーブル
+## salesテーブル
 
 |Column|Type|Options|
 |------|----|-------|
-|sele|string|null: false|
+|sale|string|null: false|
 
 ### Association
 - belongs_to :user
 
-## pointsテーブル
+## freemarket_pointsテーブル
 
 |Column|Type|Options|
 |------|----|-------|
-|point|string|null: false|
+|freemarket_point|string|null: false|
 
 ### Association
 - belongs_to :user
@@ -155,18 +156,21 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
-|notification_title|string|null: false|
-|notification_content|text|null: false|
+|title|string|null: false|
+|content|text|null: false|
+|notificationable_id|string|null: false|
 
 ### Association
 - belongs_to :user
+- belongs_to :notificationable, polymorphic: true
 
 ## todosテーブル
 
 |Column|Type|Options|
 |------|----|-------|
-|todo_title|string|null: false|
-|todo_content|text|null: false|
+|title|string|null: false|
+|content|text|null: false|
 
 ### Association
 - belongs_to :user
+
