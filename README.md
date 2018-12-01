@@ -37,31 +37,30 @@ Things you may want to cover:
 |nickname|string|null: false, unique: true|
 |mail|string|null: false|
 |address|text|null: false|
-|mail|string|null: false|
 |telephone|string|null: false|
-|birthday|string|null: false|
+|birthday|date|null: false|
 |password|string|null: false|
 |self_introduction|text|null: false|
 
 
 ### Association
-- has_many :sales
-- has_many :points
-- has_many :reviews
-- has_many :notifications, as: :notificationable
-- has_many :todos
-- has_many :comments
-- has_many :likes
-- has_many :purchases
-- has_many :sells
+- has_many :sales, dependent: :destroy
+- has_many :points, dependent: :destroy
+- has_many :reviews,dependent: :destroy
+- has_many :notifications, as: :notificationable, dependent: :destroy
+- has_many :todos, dependent: :destroy
+- has_many :comments, dependent: :destroy
+- has_many :likes, dependent: :destroy
+- has_many :purchases, dependent: :destroy
+- has_many :sells, dependent: :destroy
 
 ## itemsテーブル
 
 |Column|Type|Options|
 |------|----|-------|
-|item_name|string|index: true,null: false, unique: true|
+|name|string|index: true,null: false, unique: true|
 |image|string|null: false|
-|item_content|text|null: false|
+|content|text|null: false|
 |condition|text|null: false|
 |size|string|null: false|
 |brand_id|references|null: false, foreign_key: true|
@@ -69,14 +68,14 @@ Things you may want to cover:
 |price|string|null: false|
 |commision|string|null: false|
 |shipping_options|string|null: false|
-|shipping_date|string|null: false|
+|shipping_date|date|null: false|
 |shipping_area|string|null: false|
 |shipping_fee|string|null: false|
 
 
 ### Association
-- has_many :comments
-- has_many :likes
+- has_many :comments, dependent: :destroy
+- has_many :likes, dependent: :destroy
 - belongs_to :category
 - belongs_to :brand
 
@@ -84,7 +83,7 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
-|comment_content|text|null: false|
+|content|text|null: false|
 |user_id|references|null: false, foreign_key: true|
 |item_id|references|null: false, foreign_key: true|
 
@@ -130,6 +129,7 @@ Things you may want to cover:
 |Column|Type|Options|
 |------|----|-------|
 |sale|string|null: false|
+|user_id|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :user
@@ -138,6 +138,7 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
+|user_id|references|null: false, foreign_key: true|
 |freemarket_point|string|null: false|
 
 ### Association
@@ -147,6 +148,7 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
+|user_id|references|null: false, foreign_key: true|
 |review|string|null: false|
 
 ### Association
@@ -156,6 +158,7 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
+|user_id|references|null: false, foreign_key: true|
 |title|string|null: false|
 |content|text|null: false|
 |notificationable_id|string|null: false|
@@ -168,9 +171,28 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
+|user_id|references|null: false, foreign_key: true|
 |title|string|null: false|
 |content|text|null: false|
 
 ### Association
 - belongs_to :user
+
+## categorysテーブル
+
+|Column|Type|Options|
+|------|----|-------|
+|name|string|index: true,null: false, unique: true|
+
+### Association
+- has_many :items, dependent: :destroy
+
+## brandsテーブル
+
+|Column|Type|Options|
+|------|----|-------|
+|name|string|index: true,null: false, unique: true|
+
+### Association
+- has_many :items, dependent: :destroy
 
