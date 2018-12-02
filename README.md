@@ -30,13 +30,13 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
-|family_name|string|null: false, unique: true|
-|first_name|string|null: false, unique: true|
-|family_name_kana|string|null: false, unique: true|
-|first_name_kana|string|null: false, unique: true|
+|family_name|string|null: false|
+|first_name|string|null: false|
+|family_name_kana|string|null: false|
+|first_name_kana|string|null: false|
 |nickname|string|null: false, unique: true|
 |mail|string|null: false|
-|telephone|string|null: false|
+|telephone|string|null: false, unique: true|
 |postal_code|integer|null: false|
 |prefecture|integer|null: false|
 |city|string|null: false|
@@ -53,7 +53,8 @@ Things you may want to cover:
 - has_many :comments, dependent: :destroy
 - has_many :likes, dependent: :destroy
 - has_many :transactions, dependent: :destroy
-- has_many :buyer, class_name: "Transaction"
+- has_many :transaction_of_buyer, class_name: "Transaction", foreign_key: :buyer_id
+- has_many :transaction_of_seller, class_name: "Transaction", foreign_key: :seller_id
 
 ## credit_cardsテーブル
 
@@ -89,7 +90,7 @@ Things you may want to cover:
 - has_many :likes, dependent: :destroy
 - has_many :transactions, dependent: :destroy
 - has_many :images, dependent: :destroy
-- has_many :categorys,through,category_croups
+- has_many :categorys,through: :category_groups
 - belongs_to :brand
 
 ## commentsテーブル
@@ -134,8 +135,8 @@ Things you may want to cover:
 |item_id|references|null: false, foreign_key: true|
 
 ### Association
-- has_many :items, through: :category_groups
-- has_many :category_groups
+- belongs_to :item
+- belongs_to :category
 
 ## brandsテーブル
 
@@ -152,10 +153,12 @@ Things you may want to cover:
 |------|----|-------|
 |item_id|references|null: false, foreign_key: true|
 |buyer_id|references|null: false, foreign_key: true|
+|seller_id|references|null: false, foreign_key: true|
 |status|string|null: false|
 
 ### Association
 - belongs_to :item
 - belongs_to :user
 - belongs_to :buyer, class_name: "User"
+- belongs_to :seller, class_name: "User"
 
