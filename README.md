@@ -1,28 +1,5 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
 # DB設計
 
 
@@ -49,10 +26,10 @@ Things you may want to cover:
 
 ### Association
 - has_one :credit_cards, dependent: :destroy
-- has_many :items, dependent: :destroy
 - has_many :comments, dependent: :destroy
 - has_many :likes, dependent: :destroy
-- has_many :transactions, dependent: :destroy
+- has_many :items_of_buyer, through: :transaction_of_buyer, source: "item"
+- has_many :items_of_seller,through: :transaction_of_seller, source: "item"
 - has_many :transaction_of_buyer, class_name: "Transaction", foreign_key: :buyer_id
 - has_many :transaction_of_seller, class_name: "Transaction", foreign_key: :seller_id
 
@@ -89,9 +66,12 @@ Things you may want to cover:
 - has_many :comments, dependent: :destroy
 - has_many :likes, dependent: :destroy
 - has_many :transactions, dependent: :destroy
+- has_many :sellers, through: :transactions
+- has_many :buyers, through: :transactions
 - has_many :images, dependent: :destroy
 - has_many :categorys,through: :category_groups
 - belongs_to :brand
+- belongs_to :user
 
 ## commentsテーブル
 
