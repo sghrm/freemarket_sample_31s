@@ -50,7 +50,6 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|user_id|references|null: false, foreign_key: true|
 |name|string|index: true,null: false, unique: true|
 |content|text|null: false|
 |condition|text|null: false|
@@ -71,7 +70,6 @@
 - has_many :images, dependent: :destroy
 - has_many :categorys,through: :category_groups
 - belongs_to :brand
-- belongs_to :user
 
 ## commentsテーブル
 
